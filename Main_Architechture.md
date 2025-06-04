@@ -6279,13 +6279,15 @@ are allowed to incorporate these concepts.
 censors it in the final output. Sensitive tokens or phrases are masked (e.g. replaced 
 with “[REDACTED]” or synonyms) before the user sees them. 
 ● Modulation/Sanitization: ERL can alter or sanitize partial content. For medium-risk 
-cases, it may paraphrase answers to remove biased or emotive language, add 
-disclaimers, or soften instructions. For example, it might reframe a charged 
-statement into neutral factual terms. 
-● Diffusion Interruption: High-risk generative processes are halted. If ERC exceeds 
-an upper cutoff during a multi-step generation, ERL interrupts the diffusion 
-(generation) pipeline and prevents any further output. The user receives a partial 
-response or a safe-completion notice instead. 
+cases, it may paraphrase answers to remove biased or emotive language, add
+disclaimers, or soften instructions. For example, it might reframe a charged
+statement into neutral factual terms.
+See `ERL_Disclaimer_Guidelines.md` for sample phrases and safe-completion
+templates used when ERL alters output.
+● Diffusion Interruption: High-risk generative processes are halted. If ERC exceeds
+an upper cutoff during a multi-step generation, ERL interrupts the diffusion
+(generation) pipeline and prevents any further output. The user receives a partial
+response or a safe-completion notice instead.
 ● Layered Shielding (Partial Projection): ERL can project only the “safe layers” of a 
 response. For instance, in an ethically sensitive query, the system might answer 
 factual components fully but withhold judgment or recommendations. This layered 
