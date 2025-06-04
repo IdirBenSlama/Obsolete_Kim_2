@@ -1,4 +1,7 @@
 ### **A Formal Description of Spherical Word Methodology (SWM) Theory**
+**License Notice**  
+This specification is licensed under the MIT License. See the `LICENSE` file for details.
+
 
 ### ---
 

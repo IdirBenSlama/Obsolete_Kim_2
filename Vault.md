@@ -1,3 +1,6 @@
+**License Notice**  
+This specification is licensed under the MIT License. See the `LICENSE` file for details.
+
  
 Version: v1.0 
 Date: 2025-06-05 

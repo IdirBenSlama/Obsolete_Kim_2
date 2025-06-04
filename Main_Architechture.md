@@ -1,4 +1,7 @@
 Symbolic Representation Layer for Kimera KCCL 
+**License Notice**  
+This specification is licensed under the MIT License. See the `LICENSE` file for details.
+
 v1.0 
 This specification describes a symbolic representation layer to complement Kimera’s existing 
 embedding-based cognitive architecture. The symbolic layer will explicitly represent 

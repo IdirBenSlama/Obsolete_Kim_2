@@ -1,4 +1,7 @@
 Kimera Architecture Overview - f8370110a
+**License Notice**  
+This specification is licensed under the MIT License. See the `LICENSE` file for details.
+
  USER
  What is kimera from an engineering perspective ?
  BOT

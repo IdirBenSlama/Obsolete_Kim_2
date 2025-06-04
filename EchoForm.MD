@@ -1,4 +1,7 @@
 EcoForm Engineering Specification 
+**License Notice**  
+This specification is licensed under the MIT License. See the `LICENSE` file for details.
+
 1. Overview 
 EcoForm is the non-linear grammar and orthography subsystem within Kimera SWM. 
 Its primary purpose is to represent, store, and manipulate structured grammatical 
