@@ -5,7 +5,7 @@ This repository hosts documentation for the **Spherical Word Methodology (SWM)**
 ## Repository Layout
 
 - **`Spherical Word Methodology (SWM) Theory.md`** – conceptual background.
-- **`Main_Architechture.md`** and **`Kimera ARCHITECTURE.pdf`** – architectural overview.
+- **`Main_Architecture.md`** and **`Kimera ARCHITECTURE.pdf`** – architectural overview.
 - **`EchoForm.MD`** and **`EcoForm Engineering Specification.pdf`** – describe the EcoForm subsystem for non-linear grammar and orthography.
 - **`Vault.md`** and **`Vault Engineering Specification for Kimera SWM.pdf`** – detail the Vault memory structures and algorithms.
 - **`thermodynamic.md`** and **`Semantic Thermodynamic Engineering Specification.pdf`** – outline semantic energy rules.

@@ -17,4 +17,4 @@ Kimera: I'm sorry, but I'm not able to provide that. Instead, you can review pub
 ```
 The safe response avoids describing an illicit method while offering a constructive next step.
 
-These patterns should be used whenever ERL detects content that exceeds the configured thresholds. They supplement the single mention in `Main_Architechture.md` and act as reference templates for future development.
+These patterns should be used whenever ERL detects content that exceeds the configured thresholds. They supplement the single mention in `Main_Architecture.md` and act as reference templates for future development.
