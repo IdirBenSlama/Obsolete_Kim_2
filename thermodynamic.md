@@ -1,4 +1,7 @@
 c Thermodynamic Engineering Specification 
+**License Notice**  
+This specification is licensed under the MIT License. See the `LICENSE` file for details.
+
 1. Overview 
 Semantic Thermodynamic within Kimera SWM defines the rules governing how semantic 
 constructs (e.g., Echoforms, EcoForms, Geoid interactions) gain, dissipate, and transfer 
