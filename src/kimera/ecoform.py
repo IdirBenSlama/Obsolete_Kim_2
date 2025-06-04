@@ -47,9 +47,15 @@ class EcoFormStore:
         self.active: Dict[str, EcoForm] = {}
         self.archive: Dict[str, EcoForm] = {}
 
-    def create(self, origin_context: Dict[str, str], grammar_payload: GrammarNode,
-               grammar_vector: List[float], orthography_vector: OrthographyVector,
-               initial_as: float, decay_rate: float) -> EcoForm:
+    def create(
+        self,
+        origin_context: Dict[str, str],
+        grammar_payload: GrammarNode,
+        grammar_vector: List[float],
+        orthography_vector: OrthographyVector,
+        initial_as: float,
+        decay_rate: float,
+    ) -> EcoForm:
         ecoform_id = str(uuid4())
         ecoform = EcoForm(
             ecoform_id=ecoform_id,
@@ -79,4 +85,3 @@ class EcoFormStore:
                 if nss >= min_nss:
                     results.append(ef)
         return results
-

@@ -1,15 +1,18 @@
 from __future__ import annotations
 
-from datetime import datetime
 from typing import Any, Dict, List
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from .ecoform import EcoFormStore, GrammarNode, OrthographyVector
+from .symbolic import KnowledgeBase, Triple
+from .vault import DualVault, Scar
 
 app = FastAPI(title="Kimera EcoForm API")
 store = EcoFormStore()
+kb = KnowledgeBase()
+vault = DualVault()
 
 
 class GrammarNodeModel(BaseModel):
@@ -44,12 +47,22 @@ class QueryRequest(BaseModel):
     min_NSS: float = 0.7
 
 
+class TripleModel(BaseModel):
+    subject: str
+    predicate: str
+    obj: str
+
+
 @app.post("/ecoform/create")
 def create_ecoform(req: CreateEcoFormRequest):
+    children = [
+        GrammarNode(**child.dict())
+        for child in req.grammar_payload.children
+    ]
     grammar_node = GrammarNode(
         node_id=req.grammar_payload.node_id,
         label=req.grammar_payload.label,
-        children=[GrammarNode(**child.dict()) for child in req.grammar_payload.children],
+        children=children,
         features=req.grammar_payload.features,
     )
     orth_vec = OrthographyVector(**req.orthography_vector.dict())
@@ -85,10 +98,36 @@ def get_status(ecoform_id: str):
 @app.post("/ecoform/query")
 def query(req: QueryRequest):
     matches = store.query(req.max_age_seconds, req.min_NSS)
-    return {
-        "matches": [
-            {"ecoform_id": m.ecoform_id, "AS_current": m.activation_strength, "NSS": m.activation_strength}
-            for m in matches
-        ]
-    }
+    match_dicts = [
+        {
+            "ecoform_id": m.ecoform_id,
+            "AS_current": m.activation_strength,
+            "NSS": m.activation_strength,
+        }
+        for m in matches
+    ]
+    return {"matches": match_dicts}
 
+
+@app.post("/symbolic/insert")
+def insert_triples(triples: List[TripleModel]):
+    new_triples = [Triple(**t.dict()) for t in triples]
+    contradictions = kb.add_triples(new_triples, vault)
+    return {"contradictions": contradictions}
+
+
+@app.get("/vault/scars")
+def list_scars():
+    all_scars = list(vault.vault_a.scars.values()) + list(
+        vault.vault_b.scars.values()
+    )
+
+    def scar_info(s: Scar) -> Dict[str, Any]:
+        origin = "Vault-A" if s.scar_id in vault.vault_a.scars else "Vault-B"
+        return {
+            "scar_id": s.scar_id,
+            "contradiction": s.contradiction,
+            "origin_vault": origin,
+        }
+
+    return {"scars": [scar_info(s) for s in all_scars]}

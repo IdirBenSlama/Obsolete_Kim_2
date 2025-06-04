@@ -11,6 +11,25 @@ This repository hosts documentation for the **Spherical Word Methodology (SWM)**
 - **`thermodynamic.md`** and **`Semantic Thermodynamic Engineering Specification.pdf`** – outline semantic energy rules.
 - Additional conversation transcripts and diagrams provide further context (e.g., `conversation Abacus.pdf`).
 
+## Running the demo API
+
+`src/kimera/server.py` provides a small FastAPI service implementing parts of
+the EcoForm and symbolic subsystems. Example endpoints include:
+
+```
+POST /ecoform/create      # create an EcoForm
+GET  /ecoform/{id}/status # fetch an EcoForm status
+POST /ecoform/query       # search active EcoForms
+POST /symbolic/insert     # add triples and log contradictions
+GET  /vault/scars         # list contradiction scars
+```
+
+Launch it with:
+
+```
+uvicorn kimera.server:app
+```
+
 ## Navigating the Docs
 
 The Markdown files offer concise summaries of each subsystem, while the PDFs contain full diagrams and formal specifications.  A suggested reading order is:
