@@ -29,7 +29,7 @@ def calc_vdr(lang: str, layers: List[str]) -> float:
 
 # External – simple sentence encoder (CPU) with caching
 from sentence_transformers import SentenceTransformer
-from .cache import embed_cache
+from kimera.cache import embed_cache
 
 _encoder = SentenceTransformer("all-MiniLM-L6-v2")
 
