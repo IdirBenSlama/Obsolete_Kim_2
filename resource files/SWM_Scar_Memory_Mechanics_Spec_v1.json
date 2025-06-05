@@ -1,0 +1,72 @@
+{
+    "module_name": "SWM_Scar_Memory_Mechanics",
+    "version": "1.0",
+    "purpose": "Defines how contradiction scars are stored, aged, reinforced, or decayed within the SWM semantic field.",
+    "core_concepts": {
+        "Scar": {
+            "description": "A localized deformation of semantic space caused by contradiction collapse",
+            "properties": [
+                "location",
+                "pressure_vector",
+                "age",
+                "mass",
+                "resonance_history"
+            ]
+        },
+        "Scar Mass": {
+            "description": "Magnitude of contradiction retained in a scar",
+            "formula": "m_scar = \u222b \u0394C over local region"
+        },
+        "Scar Decay": {
+            "description": "Temporal erosion of scar memory when contradiction pressure is no longer reinforced",
+            "formula": "m(t) = m_0 * exp(-t / \u03c4_scar)"
+        },
+        "Scar Reformation": {
+            "description": "Reactivation of scar memory if contradiction echo exceeds reinforcement threshold",
+            "condition": "E(t) > \u03b5_res"
+        },
+        "Scar Vortex": {
+            "description": "Dense cluster of scars forming a recursive contradiction basin",
+            "effect": "Can act as semantic gravity well or distortion zone"
+        }
+    },
+    "parameters": {
+        "\u03c4_scar": {
+            "description": "Scar decay time constant",
+            "type": "float",
+            "default": 10.0
+        },
+        "m_threshold": {
+            "description": "Minimum mass for scar persistence",
+            "type": "float",
+            "default": 0.05
+        },
+        "scar_fusion_radius": {
+            "description": "Distance under which nearby scars may merge",
+            "type": "float",
+            "default": 0.2
+        },
+        "vortex_trigger_density": {
+            "description": "Scar density threshold for vortex formation",
+            "type": "float",
+            "default": 0.75
+        }
+    },
+    "functions": [
+        {
+            "name": "update_scar_mass",
+            "input": "scar, time_elapsed",
+            "output": "updated mass based on decay"
+        },
+        {
+            "name": "detect_scar_clusters",
+            "input": "scar_map",
+            "output": "list of scar vortex zones"
+        },
+        {
+            "name": "merge_proximal_scars",
+            "input": "scar_list",
+            "output": "fused scar entity if within fusion radius"
+        }
+    ]
+}

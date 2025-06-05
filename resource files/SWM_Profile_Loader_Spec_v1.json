@@ -1,0 +1,57 @@
+{
+    "module_name": "SWM_Profile_Loader",
+    "version": "1.0",
+    "purpose": "Allows dynamic configuration of SWM environments by loading tunable profiles.",
+    "profile_schema": {
+        "profile_name": "string",
+        "description": "string (optional)",
+        "semantic_physics": {
+            "\u0394C_max": "float",
+            "\u03c1_scar": "float",
+            "\u03bb_echo": "float",
+            "\u03b8_reflect": "float",
+            "\u03c3_torsion": "float",
+            "\u03b5_res": "float"
+        },
+        "temporal_dynamics": {
+            "\u03c4_pulse": "float",
+            "\u03ba_feedback": "float",
+            "\u03c4_decay": "float",
+            "pulse_mode": "enum ['sinusoidal', 'square', 'chaotic']"
+        }
+    },
+    "functions": [
+        {
+            "name": "load_profile",
+            "input": "JSON profile object",
+            "output": "Set system parameters according to loaded values"
+        },
+        {
+            "name": "validate_profile",
+            "input": "JSON profile object",
+            "output": "Boolean status + error messages"
+        },
+        {
+            "name": "list_profiles",
+            "input": "None",
+            "output": "List of available profiles with metadata"
+        }
+    ],
+    "example_profile": {
+        "profile_name": "HighTorsion_SlowEcho",
+        "semantic_physics": {
+            "\u0394C_max": 1.5,
+            "\u03c1_scar": 0.9,
+            "\u03bb_echo": 0.4,
+            "\u03b8_reflect": 0.2,
+            "\u03c3_torsion": 2.5,
+            "\u03b5_res": 0.08
+        },
+        "temporal_dynamics": {
+            "\u03c4_pulse": 3.0,
+            "\u03ba_feedback": 0.9,
+            "\u03c4_decay": 5.5,
+            "pulse_mode": "chaotic"
+        }
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "module_name": "IndraNet_Reflective_Coherence_Matrix",
+    "version": "1.0",
+    "purpose": "Enables semantic reflection, scar mirroring, and inter-geoid contradiction awareness within SWM.",
+    "core_concepts": {
+        "Mirror_Pairing": {
+            "description": "Detection of scar pairs across geoids with high semantic similarity",
+            "condition": "cosine_similarity(scar_i, scar_j) \u2265 \u03b5_reflect"
+        },
+        "Reflective_Link": {
+            "description": "Bidirectional coherence bridge between two mirrored scars",
+            "effect": "Allows echo reinforcement and contradiction diffusion"
+        },
+        "Resonance_Corridor": {
+            "description": "Path of multiple coherent mirror links forming a semantic conduit",
+            "use_case": "Trans-geoid contradiction stabilization or enhancement"
+        }
+    },
+    "parameters": {
+        "\u03b5_reflect": {
+            "description": "Minimum similarity threshold for mirror formation",
+            "type": "float",
+            "default": 0.85
+        },
+        "mirror_decay": {
+            "description": "Attenuation factor for mirrored echo strength across links",
+            "type": "float",
+            "default": 0.1
+        },
+        "max_resonance_depth": {
+            "description": "Maximum depth of mirror chain traversal",
+            "type": "int",
+            "default": 5
+        }
+    },
+    "functions": [
+        {
+            "name": "find_mirror_pairs",
+            "input": "scar_map",
+            "output": "List of coherent scar pairs"
+        },
+        {
+            "name": "build_reflective_links",
+            "input": "mirror_pairs",
+            "output": "Graph of reflective links"
+        },
+        {
+            "name": "trace_resonance_corridor",
+            "input": "scar_id, max_depth",
+            "output": "Ordered list of linked scars forming a corridor"
+        }
+    ]
+}

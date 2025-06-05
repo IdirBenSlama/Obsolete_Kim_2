@@ -1,0 +1,43 @@
+{
+    "engine_name": "SWM_Pulse_Cycle_Engine",
+    "version": "1.0",
+    "parameters": {
+        "\u03c4_pulse": {
+            "description": "Pulse Period",
+            "symbol": "\u03c4_pulse",
+            "type": "float",
+            "unit": "time_units",
+            "default": 2.0
+        },
+        "\u03ba_feedback": {
+            "description": "Feedback Intensity",
+            "symbol": "\u03ba_feedback",
+            "type": "float",
+            "unit": "dimensionless",
+            "default": 0.75
+        },
+        "\u03c4_decay": {
+            "description": "Echo Decay Time Constant",
+            "symbol": "\u03c4_decay",
+            "type": "float",
+            "unit": "time_units",
+            "default": 4.5
+        },
+        "\u03c8(t)": {
+            "description": "Pulse Form Function",
+            "modes": {
+                "sinusoidal": "\u03c8(t) = sin(2\u03c0t / \u03c4_pulse)",
+                "square": "\u03c8(t) = sign(sin(2\u03c0t / \u03c4_pulse))",
+                "chaotic": "\u03c8(t+1) = r * \u03c8(t) * (1 - \u03c8(t))"
+            }
+        },
+        "\u03c9(t)": {
+            "description": "Echo Persistence Function",
+            "formula": "\u03c9(t) = exp(-t / \u03c4_decay)"
+        },
+        "memory_feedback": {
+            "description": "Contradiction Memory Influence",
+            "formula": "C_t+1 = \u03c8(t) * C_t + \u03ba_feedback * \u03a3 \u03c9(i) * C_t-i"
+        }
+    }
+}

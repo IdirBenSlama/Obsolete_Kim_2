@@ -1,0 +1,32 @@
+{
+    "system_name": "Kimera-SWM Core Engine",
+    "version": "1.0",
+    "description": "Master index of modular components for SWM-based contradiction-driven cognition in the Kimera engine.",
+    "modules": [
+        {
+            "name": "SWM Core Semantic Physics Engine",
+            "filename": "SWM_Kernel_Spec_v1.json",
+            "purpose": "Defines the semantic physics field (contradiction, echo, torsion, etc.)"
+        },
+        {
+            "name": "SWM Pulse Cycle Engine",
+            "filename": "SWM_Pulse_Cycle_Engine_Spec_v1.json",
+            "purpose": "Temporal dynamics of contradiction pulses and feedback"
+        },
+        {
+            "name": "SWM Profile Loader System",
+            "filename": "SWM_Profile_Loader_Spec_v1.json",
+            "purpose": "Loads and validates tunable SWM environment profiles"
+        },
+        {
+            "name": "IndraNet Reflective Coherence Matrix",
+            "filename": "IndraNet_Reflective_Coherence_Matrix_Spec_v1.json",
+            "purpose": "Mirroring, reflection, and resonance corridors across geoids"
+        },
+        {
+            "name": "SWM Scar Memory Mechanics",
+            "filename": "SWM_Scar_Memory_Mechanics_Spec_v1.json",
+            "purpose": "Formation, decay, and fusion of contradiction scars"
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+{
+    "kernel_name": "SWM_Core_Semantic_Physics",
+    "version": "1.0",
+    "parameters": {
+        "\u0394C": {
+            "description": "Contradiction Entropy Scalar Field",
+            "symbol": "\u0394C",
+            "type": "scalar_field",
+            "unit": "dimensionless",
+            "function": "Drives movement via \u2207\u0394C"
+        },
+        "\u03bb_echo": {
+            "description": "Echo Decay Length",
+            "symbol": "\u03bb_echo",
+            "type": "float",
+            "unit": "semantic_distance_units",
+            "function": "Defines exponential decay of echo influence"
+        },
+        "\u03c1_scar": {
+            "description": "Scar Density (Semantic Mass)",
+            "symbol": "\u03c1_scar",
+            "type": "density_field",
+            "unit": "scars/unit_area",
+            "function": "Affects contradiction persistence and deformation"
+        },
+        "\u03c3_torsion": {
+            "description": "Semantic Torsion Coefficient",
+            "symbol": "\u03c3_torsion",
+            "type": "float",
+            "unit": "twist/magnitude",
+            "function": "Controls semantic drift due to contradiction twist"
+        },
+        "\u03b8_reflect": {
+            "description": "Reflection Tolerance Angle",
+            "symbol": "\u03b8_reflect",
+            "type": "float",
+            "unit": "radians",
+            "function": "Defines angular threshold for scar coherence"
+        },
+        "\u03c4_pulse": {
+            "description": "Pulse Cycle Period",
+            "symbol": "\u03c4_pulse",
+            "type": "float",
+            "unit": "time_units",
+            "function": "Controls timing of contradiction updates"
+        },
+        "\u03b5_res": {
+            "description": "Resonance Activation Threshold",
+            "symbol": "\u03b5_res",
+            "type": "float",
+            "unit": "semantic_magnitude",
+            "function": "Minimum difference for echo resonance"
+        }
+    },
+    "equations": [
+        {
+            "name": "Contradiction Force",
+            "formula": "F_C = -\u2207\u0394C"
+        },
+        {
+            "name": "Echo Strength Decay",
+            "formula": "E(d) = E_0 * exp(-d / \u03bb_echo)"
+        },
+        {
+            "name": "Scar Mass Field",
+            "formula": "\u03c1_scar(R) = (1 / |R|) * \u03a3 m_i over R"
+        },
+        {
+            "name": "Semantic Torsion Vector",
+            "formula": "T = \u03c3_torsion * (C1 \u00d7 C2)"
+        },
+        {
+            "name": "Reflection Validity",
+            "formula": "V_ref(\u03b8) = 1 if |\u03b8| \u2264 \u03b8_reflect else 0"
+        }
+    ]
+}
