@@ -64,3 +64,19 @@ omitted.
 ```
 
 These documents work together to describe how Kimera SWM orchestrates knowledge storage, semantic interactions, and overall system behavior.  Browse the Markdown files directly or open the accompanying PDFs for detailed diagrams and extended explanations.
+
+## API
+
+Launch the FastAPI service with:
+
+```
+uvicorn kimera.server:app
+```
+
+Endpoints:
+
+- `POST /ecoform/create` – create an EcoForm
+- `GET  /ecoform/{id}/status` – fetch an EcoForm status
+- `POST /ecoform/query` – search active EcoForms
+- `POST /symbolic/insert` – add triples and log contradictions
+- `GET  /vault/scars` – list contradiction scars
