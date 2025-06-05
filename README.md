@@ -65,6 +65,20 @@ omitted.
 
 These documents work together to describe how Kimera SWM orchestrates knowledge storage, semantic interactions, and overall system behavior.  Browse the Markdown files directly or open the accompanying PDFs for detailed diagrams and extended explanations.
 
+## Setup
+
+Before launching the API or running the test suite, install the project dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Execute the tests with:
+
+```bash
+pytest
+```
+
 ## API
 
 Launch the FastAPI service with:
