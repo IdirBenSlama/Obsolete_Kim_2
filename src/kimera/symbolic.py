@@ -12,14 +12,14 @@ class Triple:
 
 
 def detect_contradictions(triples: List[Triple]) -> List[str]:
-    props: Dict[str, Dict[str, str]] = {}
+    props: Dict[str, set[str]] = {}
     contradictions: List[str] = []
     for t in triples:
         if t.predicate == "HAS_PROPERTY":
-            props.setdefault(t.subject, {})
-            if t.obj in props[t.subject] and props[t.subject][t.obj] != t.obj:
+            props.setdefault(t.subject, set())
+            if t.obj not in props[t.subject] and props[t.subject]:
                 contradictions.append(f"{t.subject} conflicting property {t.obj}")
-            props[t.subject][t.obj] = t.obj
+            props[t.subject].add(t.obj)
         elif t.predicate == "CONTRADICTS":
             contradictions.append(f"{t.subject} contradicts {t.obj}")
     return contradictions

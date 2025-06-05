@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 from datetime import datetime
+from uuid import uuid4
 from typing import Any, Dict, List
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from .ecoform import EcoFormStore, GrammarNode, OrthographyVector
+from .symbolic import Triple, detect_contradictions
+from .vault import DualVault, Scar
 
 app = FastAPI(title="Kimera EcoForm API")
 store = EcoFormStore()
+vault = DualVault()
 
 
 class GrammarNodeModel(BaseModel):
@@ -42,6 +46,16 @@ class CreateEcoFormRequest(BaseModel):
 class QueryRequest(BaseModel):
     max_age_seconds: int
     min_NSS: float = 0.7
+
+
+class TripleModel(BaseModel):
+    subject: str
+    predicate: str
+    obj: str
+
+
+class InsertTriplesRequest(BaseModel):
+    triples: List[TripleModel]
 
 
 @app.post("/ecoform/create")
@@ -89,6 +103,41 @@ def query(req: QueryRequest):
         "matches": [
             {"ecoform_id": m.ecoform_id, "AS_current": m.activation_strength, "NSS": m.activation_strength}
             for m in matches
+        ]
+    }
+
+
+@app.post("/symbolic/insert")
+def symbolic_insert(req: InsertTriplesRequest):
+    triples = [Triple(**t.dict()) for t in req.triples]
+    contradictions = detect_contradictions(triples)
+    scar_ids: List[str] = []
+    for c in contradictions:
+        scar = Scar(
+            scar_id=str(uuid4()),
+            contradiction=c,
+            entropy=0.0,
+            cls_angle=0.0,
+            semantic_polarity=0.0,
+            mutation_frequency=0.0,
+            origin_time=datetime.utcnow(),
+        )
+        vault.add_scar(scar)
+        scar_ids.append(scar.scar_id)
+    return {"inserted": len(triples), "contradictions": contradictions, "scar_ids": scar_ids}
+
+
+@app.get("/vault/scars")
+def list_scars():
+    scars = vault.list_scars()
+    return {
+        "scars": [
+            {
+                "scar_id": s.scar_id,
+                "contradiction": s.contradiction,
+                "origin_time": s.origin_time.isoformat(),
+            }
+            for s in scars.values()
         ]
     }
 

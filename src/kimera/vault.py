@@ -48,3 +48,7 @@ class DualVault:
         vault = self.route(scar)
         vault.store(scar)
 
+    def list_scars(self) -> Dict[str, Scar]:
+        """Return all scars from both vaults in a single dict."""
+        return {**self.vault_a.scars, **self.vault_b.scars}
+
