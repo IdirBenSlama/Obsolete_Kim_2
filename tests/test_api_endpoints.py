@@ -44,6 +44,8 @@ def test_ecoform_endpoints():
 
 def test_symbolic_insert_and_vault_routing():
     client = TestClient(app)
+    original_a = vault.vault_a.scars.copy()
+    original_b = vault.vault_b.scars.copy()
     vault.vault_a.scars.clear()
     vault.vault_b.scars.clear()
 
@@ -53,17 +55,23 @@ def test_symbolic_insert_and_vault_routing():
             {"subject": "Fire", "predicate": "HAS_PROPERTY", "obj": "Cold"},
         ]
     }
-    resp = client.post("/symbolic/insert", json=payload)
-    assert resp.status_code == 200
-    data = resp.json()
-    scar_ids = data["scar_ids"]
-    assert data["contradictions"]
+    try:
+        resp = client.post("/symbolic/insert", json=payload)
+        assert resp.status_code == 200
+        data = resp.json()
+        scar_ids = data["scar_ids"]
+        assert data["contradictions"] == ["Fire conflicting property Cold"]
 
-    for sid in scar_ids:
-        assert sid in vault.vault_a.scars
-        assert sid not in vault.vault_b.scars
+        for sid in scar_ids:
+            assert sid in vault.vault_a.scars
+            assert sid not in vault.vault_b.scars
 
-    resp_list = client.get("/vault/scars")
-    assert resp_list.status_code == 200
-    scars = [s["scar_id"] for s in resp_list.json()["scars"]]
-    assert all(sid in scars for sid in scar_ids)
+        resp_list = client.get("/vault/scars")
+        assert resp_list.status_code == 200
+        scars = [s["scar_id"] for s in resp_list.json()["scars"]]
+        assert all(sid in scars for sid in scar_ids)
+    finally:
+        vault.vault_a.scars.clear()
+        vault.vault_a.scars.update(original_a)
+        vault.vault_b.scars.clear()
+        vault.vault_b.scars.update(original_b)
