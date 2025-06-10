@@ -94,3 +94,44 @@ Endpoints:
 - `POST /ecoform/query` – search active EcoForms
 - `POST /symbolic/insert` – add triples and log contradictions
 - `GET  /vault/scars` – list contradiction scars
+
+### EchoForm Parser
+
+The parser normalizes incoming text and builds a grammar tree before creating an EcoForm. Key steps are outlined in `EchoForm.MD`:
+1. Inputs from the text preprocessor or symbolic event bus are routed to the parser.
+2. The orthography normalizer applies Unicode NFC, strips diacritics when variance is below 0.02, and maps ligatures when similarity exceeds 0.85.
+3. A non–linear parser produces a grammar tree and computes a 128‑dimensional grammar vector.
+4. The `/ecoform/create` API stores the resulting unit with an initial activation strength and decay rate.
+
+### Cognitive Cycle Endpoint
+
+Kimera performs periodic cycles that decay activation values and process contradictions. A dedicated endpoint triggers one cycle and routes any new scars through the dual vaults.
+
+- `POST /cycle` – run a single cognitive cycle.
+
+### Example Requests
+
+Create an EcoForm from raw text:
+```bash
+curl -X POST http://localhost:8000/ecoform/create \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "origin_context": {"module": "demo", "cycle_number": 1},
+    "grammar_payload": {"node_id": "n1", "label": "S", "children": [], "features": {}},
+    "grammar_vector": [0.1, 0.1, 0.1],
+    "orthography_vector": {
+      "script_code": "Latn",
+      "unicode_normal_form": "NFC",
+      "diacritic_profile": [0.0],
+      "ligature_profile": [0.0],
+      "variant_flags": {}
+    },
+    "initial_AS": 0.9,
+    "decay_rate": 0.003
+  }'
+```
+
+Trigger a cognitive cycle:
+```bash
+curl -X POST http://localhost:8000/cycle
+```
