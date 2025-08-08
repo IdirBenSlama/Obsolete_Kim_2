@@ -5,7 +5,7 @@ from uuid import uuid4
 from typing import Any, Dict, List
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .ecoform import EcoFormStore, GrammarNode, OrthographyVector
 from .symbolic import Triple, detect_contradictions
@@ -19,8 +19,8 @@ vault = DualVault()
 class GrammarNodeModel(BaseModel):
     node_id: str
     label: str
-    children: List['GrammarNodeModel'] = []
-    features: Dict[str, Any] = {}
+    children: List['GrammarNodeModel'] = Field(default_factory=list)
+    features: Dict[str, Any] = Field(default_factory=dict)
 
     class Config:
         arbitrary_types_allowed = True
@@ -31,7 +31,7 @@ class OrthographyVectorModel(BaseModel):
     unicode_normal_form: str
     diacritic_profile: List[float]
     ligature_profile: List[float]
-    variant_flags: Dict[str, bool] = {}
+    variant_flags: Dict[str, bool] = Field(default_factory=dict)
 
 
 class CreateEcoFormRequest(BaseModel):
