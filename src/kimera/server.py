@@ -7,6 +7,10 @@ from copy import deepcopy
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+ cjwkpv-codex/update-model-fields-with-default_factory
+
+ 67qxt6-codex/update-model-fields-with-default_factory
+ main
 
 try:  # support both Pydantic v1 and v2
     from pydantic import ConfigDict, field_validator
@@ -15,6 +19,11 @@ except ImportError:  # pragma: no cover - running on Pydantic v1
     from pydantic import validator as field_validator  # type: ignore
     ConfigDict = None  # type: ignore
     _PYDANTIC_V2 = False
+ cjwkpv-codex/update-model-fields-with-default_factory
+
+
+ main
+ main
 
 from .ecoform import EcoFormStore, GrammarNode, OrthographyVector
 from .symbolic import Triple, detect_contradictions
@@ -30,6 +39,10 @@ class GrammarNodeModel(BaseModel):
     label: str
     children: List['GrammarNodeModel'] = Field(default_factory=list)
     features: Dict[str, Any] = Field(default_factory=dict)
+ cjwkpv-codex/update-model-fields-with-default_factory
+
+ 67qxt6-codex/update-model-fields-with-default_factory
+ main
 
     if _PYDANTIC_V2:
         model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -37,10 +50,19 @@ class GrammarNodeModel(BaseModel):
         class Config:
             arbitrary_types_allowed = True
 
+ cjwkpv-codex/update-model-fields-with-default_factory
     @field_validator('features', **({'mode': 'after'} if _PYDANTIC_V2 else {'always': True}))
     @classmethod
     def copy_features(cls, v: Dict[str, Any] | None) -> Dict[str, Any]:
         return deepcopy(v or {})
+
+ main
+
+    @field_validator('features', **({'mode': 'before'} if _PYDANTIC_V2 else {'pre': True}))
+    @classmethod
+    def copy_features(cls, v: Dict[str, Any] | None) -> Dict[str, Any]:
+        return deepcopy(v) if v is not None else {}
+ main
 
 
 class OrthographyVectorModel(BaseModel):
@@ -49,6 +71,7 @@ class OrthographyVectorModel(BaseModel):
     diacritic_profile: List[float]
     ligature_profile: List[float]
     variant_flags: Dict[str, bool] = Field(default_factory=dict)
+ cjwkpv-codex/update-model-fields-with-default_factory
 
     @field_validator('variant_flags', **({'mode': 'after'} if _PYDANTIC_V2 else {'always': True}))
     @classmethod
@@ -61,6 +84,16 @@ if _PYDANTIC_V2:
     GrammarNodeModel.model_rebuild()
 else:  # pragma: no cover - Pydantic v1
     GrammarNodeModel.update_forward_refs()
+
+ 67qxt6-codex/update-model-fields-with-default_factory
+
+    @field_validator('variant_flags', **({'mode': 'before'} if _PYDANTIC_V2 else {'pre': True}))
+    @classmethod
+    def copy_variant_flags(cls, v: Dict[str, bool] | None) -> Dict[str, bool]:
+        return deepcopy(v) if v is not None else {}
+
+ main
+ main
 
 
 class CreateEcoFormRequest(BaseModel):
