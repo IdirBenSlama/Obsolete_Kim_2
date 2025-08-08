@@ -3,9 +3,21 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import uuid4
 from typing import Any, Dict, List
+from copy import deepcopy
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+ 67qxt6-codex/update-model-fields-with-default_factory
+
+try:  # support both Pydantic v1 and v2
+    from pydantic import ConfigDict, field_validator
+    _PYDANTIC_V2 = True
+except ImportError:  # pragma: no cover - running on Pydantic v1
+    from pydantic import validator as field_validator  # type: ignore
+    ConfigDict = None  # type: ignore
+    _PYDANTIC_V2 = False
+
+ main
 
 from .ecoform import EcoFormStore, GrammarNode, OrthographyVector
 from .symbolic import Triple, detect_contradictions
@@ -21,9 +33,20 @@ class GrammarNodeModel(BaseModel):
     label: str
     children: List['GrammarNodeModel'] = Field(default_factory=list)
     features: Dict[str, Any] = Field(default_factory=dict)
+ 67qxt6-codex/update-model-fields-with-default_factory
 
-    class Config:
-        arbitrary_types_allowed = True
+    if _PYDANTIC_V2:
+        model_config = ConfigDict(arbitrary_types_allowed=True)
+    else:  # pragma: no cover - Pydantic v1
+        class Config:
+            arbitrary_types_allowed = True
+
+ main
+
+    @field_validator('features', **({'mode': 'before'} if _PYDANTIC_V2 else {'pre': True}))
+    @classmethod
+    def copy_features(cls, v: Dict[str, Any] | None) -> Dict[str, Any]:
+        return deepcopy(v) if v is not None else {}
 
 
 class OrthographyVectorModel(BaseModel):
@@ -32,6 +55,14 @@ class OrthographyVectorModel(BaseModel):
     diacritic_profile: List[float]
     ligature_profile: List[float]
     variant_flags: Dict[str, bool] = Field(default_factory=dict)
+ 67qxt6-codex/update-model-fields-with-default_factory
+
+    @field_validator('variant_flags', **({'mode': 'before'} if _PYDANTIC_V2 else {'pre': True}))
+    @classmethod
+    def copy_variant_flags(cls, v: Dict[str, bool] | None) -> Dict[str, bool]:
+        return deepcopy(v) if v is not None else {}
+
+ main
 
 
 class CreateEcoFormRequest(BaseModel):
